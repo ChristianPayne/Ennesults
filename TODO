@@ -1,0 +1,46 @@
+// NEEDS TESTING
+
+// TODAY'S TASKS
+
+
+// GENERAL TASKS
+// TODO: Make an ignore people list for users that we dont want to react to. (Add this as a top level check as to ignore commands.)
+// TODO: Track !lurkers
+// TODO: Chat message requirement mixed with random timer for more organic insults.
+// TODO: Make provoke pick insults that have a {user}.
+// TODO: Make an ennetrance for the bot.
+// TODO: Make a commands list json. (Or somehow break them into another class)
+// TODO: Make Jay's riot command. See what emotes the bot can spam.
+// TODO: On sub talk.
+// TODO: Make insults into objects to hold more data.
+// TODO: Have a separate list of insults for users that have not said anything in chat for a while.
+
+// HARDER TASKS
+// TODO: Cheer tracking.
+// TODO: Make sure it can run inside of OBS (Browser compatibility).
+// TODO: Make this shiz run on a Pi.
+
+// BORING TASKS
+// TODO: Make a setup for new users of the bot.
+// TODO: Set up a database for insults.
+
+// -BUG: Caps are not corrected.
+// -BUG: Colors could be anything.
+
+// DONE TODOs
+// -TODO: Make an insults.json
+// -TODO: Need a way to stop the insults.
+// -TODO: Pick a person for an insult.
+// -TODO: Add mod approved insults.
+// -TODO: Add a !commands command.
+// -TODO: Make aliases.
+// -TODO: !consent should make a person a target right away.
+// -TODO: Make a word pool for skipped 'en' words.  ie. Been, Gene, Green
+// -TODO: Make sure the bot doesnt repeat insults.
+// -TODO: Dont insult the same person twice in a row.
+// -TODO: Targeted !consent and !revokeconsent
+// -TODO: Add a settings.json
+// -TODO: Added the ability to have a comeback if @'ed.
+// -TODO: Make {channel} a flag that can be used too.
+// -TODO: Added !stats command.
+// -TODO: Make !provoke add more insults right away.
