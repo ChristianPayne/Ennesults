@@ -1,6 +1,5 @@
 // Basic requirements
 const Command = require('./command.js');
-// Custom requirements
 
 // Extends from the base Command class.
 class Template extends Command
@@ -9,8 +8,8 @@ class Template extends Command
     // Name command and aliases in params or super params. 
     constructor() {
         super('commandName', ['aliases']);
-        this.setDescription('Description template.');
         this.needsMod = false;
+        this.setDescription('Description template.');
     }
 
     // Executes command when called.

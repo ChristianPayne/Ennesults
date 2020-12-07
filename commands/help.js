@@ -33,7 +33,7 @@ class Help extends Command
             // Find a match of the arg and chat the description.
             if(args[0] === commands[keys[i]].name)
             {
-                this.chat(commands[keys[i]].description);
+                this.chat(commands[keys[i]].getDescription());
                 return;
             }
         }

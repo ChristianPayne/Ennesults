@@ -17,11 +17,11 @@ function saveJSONFile (filePath, content)
     fs.writeFile(filePath, JSON.stringify(content), (error) => {
         if(error)
         {
-            console.log('ERROR: File write error! ' + error);
+            console.log('ERROR: File write error! | ' + filePath + " | " + error);
         }
         else
         {
-            console.log('CONSOLE: File write confirmed.');
+            console.log('CONSOLE: File write confirmed. | ' + filePath);
         }
     });
 }

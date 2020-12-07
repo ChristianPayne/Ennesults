@@ -21,7 +21,7 @@
 // TODO: Make this shiz run on a Pi.
 
 // BORING TASKS
-// TODO: Make a setup for new users of the bot.
+// TODO: Make a setup for new users of the bot. (Inquirer, fs)
 // TODO: Set up a database for insults.
 
 // -BUG: Caps are not corrected.
