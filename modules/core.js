@@ -25,4 +25,7 @@ function chat (message)
 }
 
 
-module.exports = {client, chat};
+module.exports = {
+    client,
+    chat
+};

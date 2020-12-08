@@ -8,6 +8,9 @@ const Color = require("../commands/color");
 const AddEnnesult = require("../commands/addennesult");
 const RemoveEnnesult = require("../commands/removeennesult");
 const Provoke = require("../commands/provoke");
+const Calmdown = require("../commands/calmdown");
+const Targets = require("../commands/targets");
+const Reply = require("../commands/reply");
 
 // A list of all commands that are currently available.
 const commands = {
@@ -19,6 +22,10 @@ const commands = {
     addennesult : new AddEnnesult(),
     removeennesult : new RemoveEnnesult(),
     provoke : new Provoke(),
+    calmdown : new Calmdown(),
+    targets : new Targets(),
+    mukbang : new Reply('mukbang', [], 'Mukbang!'),
+    bang : new Reply('bang', [''], 'BANG!'),
 }
 
 // Get all of the keys for our commands.
@@ -96,51 +103,6 @@ getCommandKeys().forEach((value1) => {
 
     // switch (name)
     // {
-        
-    //     case 'provoke':
-    //     {
-    //         if(args.length > 0)
-    //         {
-    //             let targetedUser = args[0].startsWith('@') ? args[0].substring(1) : args[0];
-                
-    //             if(checkInsultability(targetedUser))
-    //             {
-    //                 provoke(targetedUser);
-    //             }
-    //             else
-    //             {
-    //                 chat(`/me @${targetedUser} is not able to be insulted.`);
-    //                 break;
-    //             }
-    //         }
-
-    //         if(checkInsultability(username))
-    //         {
-    //             provoke(username);
-    //         }
-
-    //         break;
-    //     }
-
-    //     case 'calmdown':
-    //     {
-    //         stopInsultTimer();
-    //         break;
-    //     }
-
-    //     case 't':
-    //     case 'targets':
-    //         {
-    //             if(insultTargets.length > 0)
-    //             {
-    //                 chat(`@${username} Current targets are: ${insultTargets}`);
-    //             }
-    //             else
-    //             {
-    //                 chat(`@${username} There are no current targets.`);
-    //             }
-    //             break;
-    //         }
 
     //     case 'ao':
     //     case 'addoverride':
@@ -222,27 +184,14 @@ getCommandKeys().forEach((value1) => {
     //             break;
     //         }
 
-    //     case 'test':
-    //         {
-    //             chat(JSON.stringify(allUsersInChat));
-    //             break;
-    //         }
-
-    //     case 'muk':
-    //         {
-    //             chat("Muk");
-    //         } 
-        
-    //     case '':
-    //     case 'bang':
-    //         {
-    //             chat('BANG!');
-    //             break;
-    //         }
-
     //     default:
     //             break;
     // }
 
 
-module.exports = {executeCommand, commands, onCommand, getCommandKeys}
+module.exports = {
+    executeCommand,
+    commands,
+    onCommand,
+    getCommandKeys
+}

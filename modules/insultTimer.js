@@ -62,15 +62,18 @@ function removeUserFromInsultTargets (username)
     }
 }
 
+// Starts the insult timer if there isnt already one running.
 function startInsultTimer ()
 {
-    chat("Brace yourselves...");
+    if(insultInterval) return;
+
     insultInterval = setInterval(() => 
     {
         sayRandomInsult();
     }, settings.insultIntervalTime * 1000);
 }
 
+// Stops the insult timer if there is one running.
 function stopInsultTimer ()
 {
     clearTimeout(insultInterval);
@@ -82,7 +85,6 @@ function sayRandomInsult (targetedUser = undefined)
 {
     const { insultTargets, formatInsult } = require('./chat');
 
-    console.log(insultTargets);
     // Make sure that we have at least one target.
     if(insultTargets.length > 0)
     {
@@ -138,4 +140,11 @@ function getRandomInsult ()
     return chosenInsult;
 }
 
-module.exports = {onMessage, onJoin, onPart, sayRandomInsult};
+module.exports = {
+    onMessage, 
+    onJoin, 
+    onPart, 
+    startInsultTimer, 
+    stopInsultTimer,
+    sayRandomInsult
+};

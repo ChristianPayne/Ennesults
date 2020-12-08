@@ -14,14 +14,15 @@ class Provoke extends Command
         this.setDescription('Provokes Ennesults to insult a random person or, optional, targeted person.');
     }
 
+    // TODO: Work on this to make it provoke a couple times in a row.
     // Executes command when called.
     execute (args, props)
     {
         const { formatUsername } = require('../modules/chat');
         super.execute();
 
-        let insultsToSend = 3
-        let insultsSent = 0;
+        // let insultsToSend = 3
+        // let insultsSent = 0;
         sayRandomInsult(formatUsername(args[0]));
         // let timer = setInterval(()=>{
         //     sayRandomInsult();

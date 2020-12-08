@@ -41,6 +41,8 @@ core.client.on('message', (channel, tags, message, self) =>
 // Listener for people joining the channel.
 core.client.on('join', (channel, username, self) => 
 {
+    if (self) return;
+
     // Call the listener for the insultTimer module.
     insultTimer.onJoin(channel, username);
 
@@ -51,23 +53,21 @@ core.client.on('join', (channel, username, self) =>
 // Listener for people leaving the channel.
 core.client.on('part', (channel, username, self) =>
 {
+    if (self) return;
+
     // Call the listener for the insultTimer module.
     insultTimer.onPart(channel, username);
 
-    
-    // let partedUserIndex = allUsersInChat.indexOf(username);
-    // if(partedUserIndex != -1)
-    // {
-    //     allUsersInChat.splice(partedUserIndex);
-    //     console.log(`CONSOLE: Removed ${username} from allUsersInChat.`);
-    // }
+    // Remove users from the viewer list when they leave the channel.
+    removeUserFromViewerList(username);
     
 });
 
 // Start insults when logging into the channel.
 core.client.on("logon", () => 
 {
-    // startInsultTimer();
+    // Start up the timer to insult people.
+    require('./insultTimer').startInsultTimer();
 });
 
 // Listener for whispers. TODO: Add whisper functionality
@@ -81,11 +81,23 @@ core.client.on("whisper", (from, userstate, message, self) =>
 });
 
 
+// Add users to allUsersInChat.
 function addUserToViewerList (username)
 {
     if(!allUsersInChat.includes(username))
     {
         allUsersInChat.push(username);
+    }
+}
+
+// Remove users from allUsersInChat.
+function removeUserFromViewerList (username)
+{
+    let partedUserIndex = allUsersInChat.indexOf(username);
+    if(partedUserIndex != -1)
+    {
+        allUsersInChat.splice(partedUserIndex);
+        console.log(`CONSOLE: Removed ${username} from allUsersInChat.`);
     }
 }
 
@@ -153,4 +165,12 @@ function formatUsername (username)
 }
 //#endregion
 
-module.exports = {allUsersInChat ,checkInsultability, isMod, consenters, insultTargets, formatInsult, formatUsername};
+module.exports = {
+    allUsersInChat,
+    insultTargets,
+    consenters,
+    isMod,
+    checkInsultability,
+    formatInsult,
+    formatUsername
+};

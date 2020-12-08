@@ -15,6 +15,7 @@ class Targets extends Command
     // Executes command when called.
     execute (args, props)
     {
+        const { insultTargets } = require('../modules/chat');
         super.execute();
 
         if(insultTargets.length > 0)
