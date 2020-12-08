@@ -11,6 +11,7 @@ const Provoke = require("../commands/provoke");
 const Calmdown = require("../commands/calmdown");
 const Targets = require("../commands/targets");
 const Reply = require("../commands/reply");
+const Stats = require("../commands/stats");
 
 // A list of all commands that are currently available.
 const commands = {
@@ -26,6 +27,7 @@ const commands = {
     targets : new Targets(),
     mukbang : new Reply('mukbang', [], 'Mukbang!'),
     bang : new Reply('bang', [''], 'BANG!'),
+    stats : new Stats(),
 }
 
 // Get all of the keys for our commands.
@@ -82,6 +84,7 @@ getCommandKeys().forEach((value1) => {
     {
         if(value1 === getCommandKeys()[i]) continue;
 
+        console.log(`${value1} | ${getCommandKeys()[i]}`);
         // Check to see if the names are the same.
         if(commands[getCommandKeys()[i]].isCommandOrAlias(commands[value1].name))
         {
