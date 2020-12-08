@@ -17,11 +17,12 @@ class Provoke extends Command
     // Executes command when called.
     execute (args, props)
     {
+        const { formatUsername } = require('../modules/chat');
         super.execute();
 
         let insultsToSend = 3
         let insultsSent = 0;
-        sayRandomInsult(args[0]);
+        sayRandomInsult(formatUsername(args[0]));
         // let timer = setInterval(()=>{
         //     sayRandomInsult();
         //     if(insultsSent < 3)

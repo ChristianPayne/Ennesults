@@ -139,6 +139,18 @@ function formatInsult(chatMessage, userReplacement, channelReplacement)
 
     return(modifiedText);
 }
+
+function formatUsername (username)
+{
+    let name = username.toLowerCase();
+
+    if(name.startsWith('@'))
+    {
+        name = name.substring(1);
+    }
+
+    return name;
+}
 //#endregion
 
-module.exports = {allUsersInChat ,checkInsultability, isMod, consenters, insultTargets, replaceChatVariables: formatInsult};
+module.exports = {allUsersInChat ,checkInsultability, isMod, consenters, insultTargets, formatInsult, formatUsername};

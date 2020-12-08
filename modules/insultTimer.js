@@ -1,7 +1,6 @@
-// TODO: Integrate this.
-const { formatInsult } = require('./chat');
+const chat = require('./core').chat;
 
-const { insults, insultTargets } = require('./files').files;
+const { insults, settings } = require('./files').files;
 
 // Runtime number of how many seconds passed since last insult.
 const insultTimePassed = 0;
@@ -81,7 +80,8 @@ function stopInsultTimer ()
 // Does all the work to get and say a random insult at specified user. If no user is given, pick someone random.
 function sayRandomInsult (targetedUser = undefined)
 {
-    // FIXME: THIS IS AN EMPTY ARRAY. MAYBE IT ISNT PULLING IT CORRECTLY OR USERS AREN'T BEING ADDED CORRECTLY.
+    const { insultTargets, formatInsult } = require('./chat');
+
     console.log(insultTargets);
     // Make sure that we have at least one target.
     if(insultTargets.length > 0)
@@ -114,7 +114,6 @@ function sayRandomInsult (targetedUser = undefined)
             chosenUser = targetedUser;
         }
         
-
         // Format the insult message and say it.
         chat(formatInsult(randInsult, chosenUser, settings.channel));
 

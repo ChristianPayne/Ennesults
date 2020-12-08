@@ -8,7 +8,6 @@ const files =
     colors : JSON.parse(fs.readFileSync('./files/colors.json')),
     comebacks : JSON.parse(fs.readFileSync('./files/comebacks.json')),
     ignoreList : JSON.parse(fs.readFileSync('./files/ignore.json')),
-    insultTargets : []
 }
 
 function saveJSONFile (filePath, content)
