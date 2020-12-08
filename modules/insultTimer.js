@@ -1,17 +1,66 @@
 // TODO: Integrate this.
+const { formatInsult } = require('./chat');
 
+const { insults, insultTargets } = require('./files').files;
 
-// const insultTimePassed = 0;
-// const chatLinesPassed = 0;
-
-// let lastUserInsulted;
-// let lastInsultUsed;
-
+// Runtime number of how many seconds passed since last insult.
+const insultTimePassed = 0;
+// Runtime number of how many lines of chat have passed since last insult.
+const chatLinesPassed = 0;
+// Runtime variable of the last user that was insulted.
+let lastUserInsulted;
+// Runtime variable of the last insult used.
+let lastInsultUsed;
+// Runtime variable of the last interval that was set.
 let insultInterval = null;
 
-function onMessage (channel, tags, message)
+// Listener for messages.
+function onMessage (_channel, tags, _message)
 {
-    console.log('Here');
+    addUserToInsultTargets(tags.username);
+}
+// Listener for people joining the channel.
+function onJoin (_channel, username)
+{
+    addUserToInsultTargets(username);
+}
+// Listener for people leaving the channel.
+function onPart (_channel, username)
+{
+    removeUserFromInsultTargets(username);
+}
+// Adds a user to the insult list if they aren't already in it.
+function addUserToInsultTargets (username)
+{
+    // Get the current insult targets array.
+    const { consenters, insultTargets } = require('./chat');
+
+    if(consenters.includes(username))
+    {
+        // Checks the list for their name already.
+        if(insultTargets.includes(username))
+        {
+            return;
+        }
+        else
+        {
+            insultTargets.push(username);
+            console.log(`CONSOLE: ${username} has become a target.`);
+        }
+    }
+}
+// Removes a user from the insult list if they are on it.
+function removeUserFromInsultTargets (username)
+{
+    // Get the current insult targets array.
+    const { insultTargets } = require('./chat');
+
+    let removedUserIndex = insultTargets.indexOf(username);
+    if(removedUserIndex !== -1)
+    {
+        insultTargets.splice(removedUserIndex, 1);
+        console.log(`CONSOLE: ${username} was removed from the insults list.`);
+    }
 }
 
 function startInsultTimer ()
@@ -29,78 +78,20 @@ function stopInsultTimer ()
     chat('Okay, okay. I\'m calm. I\'m good...');
 }
 
-function getRandomInsult ()
+// Does all the work to get and say a random insult at specified user. If no user is given, pick someone random.
+function sayRandomInsult (targetedUser = undefined)
 {
-    if(!insults.length > 0)
-        return;
-    
-    const randomIndex = Math.floor(Math.random() * (insults.length));
-    const chosenInsult = insults[randomIndex];
-    return chosenInsult;
-}
-
-function addUserToInsultList (username)
-{
-    if(consenters.includes(username))
-    {
-        // Checks the list for their name already.
-        if(insultTargets.includes(username))
-        {
-            return;
-        }
-        else
-        {
-            insultTargets.push(username);
-            console.log(`CONSOLE: ${username} has become a target.`);
-        }
-    }
-}
-
-function removeFromInsultList (username)
-{
-    let removedUserIndex = insultTargets.indexOf(username);
-    if(removedUserIndex !== -1)
-    {
-        insultTargets.splice(removedUserIndex, 1);
-        console.log(`CONSOLE: ${username} was removed from the insults list.`);
-    }
-}
-
-// TODO: Move this to the provoke command.
-function provoke (targetedUser)
-{
-    let insultsToSend = 3
-    let insultsSent = 0;
-    sayRandomInsult(targetedUser);
-    // let timer = setInterval(()=>{
-    //     sayRandomInsult();
-    //     if(insultsSent < 3)
-    //     {
-    //         clearInterval(timer);
-    //         insultsSent = 0;
-    //     }
-    //     insultsSent++;
-    // },3000);
-
-    // if(!insultInterval)
-    // {
-    //     startInsultTimer();
-    // }
-}
-
-
-function sayRandomInsult (targetedUser)
-{
+    // FIXME: THIS IS AN EMPTY ARRAY. MAYBE IT ISNT PULLING IT CORRECTLY OR USERS AREN'T BEING ADDED CORRECTLY.
+    console.log(insultTargets);
+    // Make sure that we have at least one target.
     if(insultTargets.length > 0)
     {
-        // Make sure we arent getting the same insult as last time.
+        // Make sure we aren't getting the same insult as last time.
         let randInsult;
         let chosenUser;
         do
         {
             randInsult = getRandomInsult();
-            // console.log("Same insult as last time... Getting a new one.");
-            // console.log(`randInsult: ${randInsult} | lastInsultsUsed: ${lastInsultUsed}`);
         } while(randInsult === lastInsultUsed)
 
         // Check to make sure that we are not picking the same person as last insult.
@@ -118,13 +109,14 @@ function sayRandomInsult (targetedUser)
 
             chosenUser = insultTargets[randTargetIndex];
         }
-        else
+        else //Use the supplied user as the target.
         {
             chosenUser = targetedUser;
         }
         
 
-        chat(replaceChatVariables(randInsult, chosenUser, settings.channel));
+        // Format the insult message and say it.
+        chat(formatInsult(randInsult, chosenUser, settings.channel));
 
         // Set the last user insulted to the one we just picked.
         lastUserInsulted = chosenUser;
@@ -136,5 +128,15 @@ function sayRandomInsult (targetedUser)
         console.log('CONSOLE: No one is here for me to insult...');
     }
 }
+// Returns a random insult from the list of insults.
+function getRandomInsult ()
+{
+    if(!insults.length > 0)
+        return;
+    
+    const randomIndex = Math.floor(Math.random() * (insults.length));
+    const chosenInsult = insults[randomIndex];
+    return chosenInsult;
+}
 
-module.exports = {onMessage};
+module.exports = {onMessage, onJoin, onPart, sayRandomInsult};

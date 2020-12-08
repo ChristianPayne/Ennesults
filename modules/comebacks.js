@@ -3,8 +3,7 @@ const core = require('./core.js');
 
 // let lastComebackUsed;
 
-// TODO: Make this into a function, not a listener.
-core.client.on('message', (channel, tags, message, self) => 
+function onComebacks(channel, tags, message) 
 {
     if(!message.startsWith('!'))
     {
@@ -22,7 +21,7 @@ core.client.on('message', (channel, tags, message, self) =>
         }
         return;
     }
-});
+}
 
 function sayRandomComeback(toUser)
 {

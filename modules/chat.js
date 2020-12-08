@@ -1,13 +1,18 @@
-// Viewer Tracking
-// Target Tracking
-// Chat Helper Functions
+// Core Twitch connection features.
+const core = require('./core');
+// Arrays from files.
+const {ignoreList, consenters} = require('./files').files;
 
-const core = require('./core.js');
-const {ignoreList, consenters} = require('./files.js');
-const {commands, onCommand} = require('./commands.js');
-const { onMessage } = require('./insultTimer.js');
+// Commands module.
+const commands = require('./commands');
+// Insult timer module.
+const insultTimer = require('./insultTimer');
+const files = require('./files');
+// Runtime array of users in chat.
 const allUsersInChat = [];
+// Runtime array of insult targets.
 const insultTargets = [];
+// Runtime array of lurkers in chat.
 const lurkers = [];
 
 // Listener for normal chat messages.
@@ -17,7 +22,7 @@ core.client.on('message', (channel, tags, message, self) =>
     if (self || message.startsWith('!')) return;
 
     // Add functions here for things that need to listen to chat messages.
-    onMessage(channel, tags, message);
+    insultTimer.onMessage(channel, tags, message);
 });
 
 // Listener for commands.
@@ -30,22 +35,27 @@ core.client.on('message', (channel, tags, message, self) =>
     
 
     // Add functions here that need to listen to commands.
-    onCommand(channel, tags, message);
+    commands.onCommand(channel, tags, message);
 });
 
 // Listener for people joining the channel.
 core.client.on('join', (channel, username, self) => 
 {
-    // addUserToViewerList(username);
+    // Call the listener for the insultTimer module.
+    insultTimer.onJoin(channel, username);
 
-    // addUserToInsultList(username);
+    // Add all users who join to the viewer list.
+    addUserToViewerList(username);
 });
 
 // Listener for people leaving the channel.
 core.client.on('part', (channel, username, self) =>
 {
-    // let partedUserIndex = allUsersInChat.indexOf(username);
+    // Call the listener for the insultTimer module.
+    insultTimer.onPart(channel, username);
 
+    
+    // let partedUserIndex = allUsersInChat.indexOf(username);
     // if(partedUserIndex != -1)
     // {
     //     allUsersInChat.splice(partedUserIndex);
@@ -111,7 +121,7 @@ function isMod (props)
     }
 }
 
-function replaceChatVariables(chatMessage, userReplacement, channelReplacement)
+function formatInsult(chatMessage, userReplacement, channelReplacement)
 {
     let modifiedText = chatMessage;
 
@@ -131,4 +141,4 @@ function replaceChatVariables(chatMessage, userReplacement, channelReplacement)
 }
 //#endregion
 
-module.exports = {allUsersInChat ,checkInsultability, isMod, consenters};
+module.exports = {allUsersInChat ,checkInsultability, isMod, consenters, insultTargets, replaceChatVariables: formatInsult};

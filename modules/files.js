@@ -1,5 +1,4 @@
 const fs = require('fs');
-
 const files =
 {
     settings : JSON.parse(fs.readFileSync('./files/settings.json')),

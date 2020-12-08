@@ -7,6 +7,7 @@ const RevokeConsent = require("../commands/revokeconsent");
 const Color = require("../commands/color");
 const AddEnnesult = require("../commands/addennesult");
 const RemoveEnnesult = require("../commands/removeennesult");
+const Provoke = require("../commands/provoke");
 
 // A list of all commands that are currently available.
 const commands = {
@@ -17,6 +18,7 @@ const commands = {
     color : new Color(),
     addennesult : new AddEnnesult(),
     removeennesult : new RemoveEnnesult(),
+    provoke : new Provoke(),
 }
 
 // Get all of the keys for our commands.

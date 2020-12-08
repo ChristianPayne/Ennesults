@@ -1,12 +1,9 @@
-// Requirements
-// const { format } = require('path');
-
-
-// Other scripts
-let files = require("./modules/files.js");
-let core = require("./modules/core.js");
-let chat = require("./modules/chat.js");
-let commands = require('./modules/commands.js');
+// Modules
+let files = require("./modules/files");
+let core = require("./modules/core");
+let chat = require("./modules/chat");
+let commands = require('./modules/commands');
+let insultTimer = require('./modules/insultTimer');
 
 
 //#region Commands
@@ -26,11 +23,11 @@ let commands = require('./modules/commands.js');
 // List of all commands that can be run.
 
 //#endregion
-/*
 
 //#region Bot functionality
 
 
+/*
 function addToIgnoreList (username)
 {
     username = username.toLowerCase();
@@ -91,6 +88,7 @@ function removeLurker (username)
         // console.log(`${username} was not found in the lurkers list.`);
     }
 }
+*/
 
 //#endregion
 
@@ -98,16 +96,14 @@ function removeLurker (username)
 
 
 // Was testing some notice functionality.
-client.on("notice", (channel, msgid, message) => {
-    // Do your stuff.
-    console.log(msgid);
-    if(msgid == 'color_changed')
-    {
-        // chat('Color changed successfully.');
-    }
-});
+// client.on("notice", (channel, msgid, message) => {
+//     // Do your stuff.
+//     console.log(msgid);
+//     if(msgid == 'color_changed')
+//     {
+//         // chat('Color changed successfully.');
+//     }
+// });
 
 
 //#endregion
-
-*/

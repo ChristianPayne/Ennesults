@@ -1,8 +1,7 @@
 // TODO: Integrate this.
-// TODO: Make this into a function instead of a listener.
 
 // Speak on whisper
-client.on("whisper", (from, userstate, message, self) => 
+function onWhisper(from, userstate, message,)
 {
     // Don't listen to my own messages..
     if (self) return;
@@ -17,4 +16,4 @@ client.on("whisper", (from, userstate, message, self) =>
     
 
     // Do your stuff.
-});
+}

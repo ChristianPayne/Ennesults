@@ -1,7 +1,6 @@
 // TODO: Integrate this.
-// TODO: Make this into a function, not a listener.
 // 'en' correction
-client.on("message", (_channel, tags, message, self) => 
+function onMessage(_channel, tags, message)
 {
     if(self || message.startsWith('!') || checkInsultability(tags.username)) return;
     
@@ -34,7 +33,7 @@ client.on("message", (_channel, tags, message, self) =>
             console.log("CONSOLE: Skipping 'en' correction.");
         }
     }
-});
+}
 
 function addCorrectionOverride(keyword)
 {
