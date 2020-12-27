@@ -1,4 +1,4 @@
-const chat = require('../modules/core').chat;
+const { chat } = require('../modules/core');
 
 class Command
 {
