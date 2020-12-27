@@ -15,7 +15,6 @@ class Provoke extends Command
     }
 
     // TODO: Work on this to make it provoke a couple times in a row.
-    // FIXME: !provoke with no username doesnt work.
     // Executes command when called.
     execute (args, props)
     {
