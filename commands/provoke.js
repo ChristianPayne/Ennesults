@@ -15,6 +15,7 @@ class Provoke extends Command
     }
 
     // TODO: Work on this to make it provoke a couple times in a row.
+    // FIXME: !provoke with no username doesnt work.
     // Executes command when called.
     execute (args, props)
     {
@@ -23,7 +24,14 @@ class Provoke extends Command
 
         // let insultsToSend = 3
         // let insultsSent = 0;
-        sayRandomInsult(formatUsername(args[0]));
+        if(!args.length > 0)
+        {
+            sayRandomInsult();
+        }
+        else
+        {
+            sayRandomInsult(formatUsername(args[0]));
+        }
         // let timer = setInterval(()=>{
         //     sayRandomInsult();
         //     if(insultsSent < 3)

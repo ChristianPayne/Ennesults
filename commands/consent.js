@@ -1,8 +1,8 @@
 // Basic requirements
 const Command = require('./command.js');
 // Custom requirements
-const { consenters, insultTargets } = require('../Modules/files.js').files;
-const { saveJSONFile } = require('../Modules/files.js');
+const { consenters, insultTargets } = require('../helpers/files.js').files;
+const { saveJSONFile } = require('../helpers/files.js');
 
 class Consent extends Command
 {
@@ -35,6 +35,7 @@ class Consent extends Command
             else
             {
                 this.chat(`/me Consenting for someone else needs mod permissions.`);
+                return;
             }
         }
         else

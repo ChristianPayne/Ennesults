@@ -15,7 +15,7 @@ class Stats extends Command
     // Executes command when called.
     execute (args, props)
     {
-        const { insults, comebacks } = require('../modules/files').files;
+        const { insults, comebacks } = require('../helpers/files').files;
         const { insultTargets } = require('../modules/chat');
 
         super.execute();

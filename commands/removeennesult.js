@@ -17,8 +17,8 @@ class RemoveEnnesult extends Command
     {
         super.execute();
 
-        const { insults } = require("../modules/files.js").files;
-        const { saveJSONFile } = require("../modules/files.js");
+        const { insults } = require("../helpers/files.js").files;
+        const { saveJSONFile } = require("../helpers/files.js");
 
         if(!props.argsString)
         {

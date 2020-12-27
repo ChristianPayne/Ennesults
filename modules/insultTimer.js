@@ -1,6 +1,6 @@
 const chat = require('./core').chat;
 
-const { insults, settings } = require('./files').files;
+const { insults, settings } = require('../helpers/files').files;
 
 // Runtime number of how many seconds passed since last insult.
 const insultTimePassed = 0;
@@ -80,8 +80,15 @@ function startInsultTimer ()
 // Stops the insult timer if there is one running.
 function stopInsultTimer ()
 {
+    if(insultInterval)
+    {
+        chat('Okay, okay. I\'m calm. I\'m good...');
+    }
+    else
+    {
+        chat('I\'m calm already, sheeeeeesh.');
+    }
     clearTimeout(insultInterval);
-    chat('Okay, okay. I\'m calm. I\'m good...');
 }
 
 // Does all the work to get and say a random insult at specified user. If no user is given, pick someone random.

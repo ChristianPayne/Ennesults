@@ -1,14 +1,14 @@
 // Core Twitch connection features.
 const core = require('./core');
 // Arrays from files.
-const {ignoreList, consenters} = require('./files').files;
+const {ignoreList, consenters} = require('../helpers/files').files;
 
 // Commands module.
 const commands = require('./commands');
 // Insult timer module.
 const insultTimer = require('./insultTimer');
 // Files Module
-const files = require('./files');
+const files = require('../helpers/files');
 // Whisper Module
 const whispers = require('./whispers');
 // Runtime array of users in chat.

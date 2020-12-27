@@ -1,4 +1,4 @@
-// Command requirements
+// Requirements
 const Test = require("../commands/test");
 const Consent = require("../commands/consent");
 const Orders = require("../commands/orders");
@@ -64,16 +64,16 @@ function executeCommand (name, args, props)
     // Loop over all the keys in the commands object.
     getCommandKeys().forEach((value, index) =>
     {
-        // This command needs mod but the user doesn't have it.
-        if(commands[value].needsMod && !isMod(props))
-        {
-            chat(`!${value} needs moderator permissions to be used.`);
-            return;
-        } 
-
         // Check to see if that command matches.
         if(commands[value].isCommandOrAlias(name))
         {
+            // This command needs mod but the user doesn't have it.
+            if(commands[value].needsMod && !isMod(props))
+            {
+                chat(`!${value} needs moderator permissions to be used.`);
+                return;
+            } 
+
             // Execute commands[value] and pass the args and message properties.
             commands[value].execute(args, props);
         }

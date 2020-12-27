@@ -1,6 +1,6 @@
 require('dotenv').config();
 const tmi = require('tmi.js');
-const { settings } = require('./files').files;
+const { settings } = require('../helpers/files').files;
 
 // Connect with credentials
 const client = new tmi.Client({

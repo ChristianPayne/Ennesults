@@ -1,6 +1,5 @@
-// TODO: Integrate this.
 const core = require('./core');
-const { files } = require('./files');
+const { files } = require('../helpers/files');
 
 // Speak on whisper
 function onWhisper(from, _userstate, message, self)

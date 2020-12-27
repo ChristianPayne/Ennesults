@@ -1,8 +1,8 @@
 // Basic requirements
 const Command = require('./command.js');
 // Custom requirements
-const { consenters, insultTargets } = require('../Modules/files.js').files;
-const { saveJSONFile } = require('../Modules/files.js');
+const { consenters, insultTargets } = require('../helpers/files.js').files;
+const { saveJSONFile } = require('../helpers/files.js');
 
 // Extends from the base Command class.
 class RevokeConsent extends Command

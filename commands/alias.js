@@ -18,22 +18,32 @@ class Alias extends Command
         super.execute();
 
         const commands = require('../modules/commands.js');
-        const commandFound = false;
+        let commandFound = false;
 
         // Loops over command keys that are active and are finds the one that matches the args.
         commands.getCommandKeys().forEach((value, index) => 
         {
             if(value.toLowerCase() == args[0].toLowerCase())
             {
-                let aliases = `${value} aliases are:`;
-                commands.commands[value].getAliases().forEach((value, index) => {
-                    aliases += ` '${value}'`
-                })
-                aliases += '.';
-                this.chat(aliases);
-                commandFound = true;
-                return;
-            }           
+                if(commands.commands[value].getAliases().length > 0)
+                {
+                    let aliases = `${value} aliases are:`;
+                    commands.commands[value].getAliases().forEach((value, index) => 
+                    {
+                        aliases += ` '${value}'`
+                    });
+                    aliases += '.';
+                    this.chat(aliases);
+                    commandFound = true;
+                    return;
+                }
+                else
+                {
+                    this.chat('There are no aliases for this command.');
+                    commandFound = true
+                    return;
+                } 
+            }
         });
 
         if(!commandFound)

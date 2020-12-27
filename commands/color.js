@@ -16,7 +16,7 @@ class Color extends Command
     {
         super.execute();
 
-        let { colors } = require("../modules/files.js").files;
+        let { colors } = require("../helpers/files.js").files;
 
         if(args[0] == undefined)
             {
