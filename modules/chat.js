@@ -7,7 +7,10 @@ const {ignoreList, consenters} = require('./files').files;
 const commands = require('./commands');
 // Insult timer module.
 const insultTimer = require('./insultTimer');
+// Files Module
 const files = require('./files');
+// Whisper Module
+const whispers = require('./whispers');
 // Runtime array of users in chat.
 const allUsersInChat = [];
 // Runtime array of insult targets.
@@ -77,7 +80,7 @@ core.client.on("whisper", (from, userstate, message, self) =>
     if (self) return;
 
     // Add functions here that need to listen to whispers.
-    
+    whispers.onWhisper(from, userstate, message, self);
 });
 
 
@@ -105,14 +108,15 @@ function removeUserFromViewerList (username)
 function checkInsultability (username)
 {
     const lcUsername = username.toLowerCase();
-    
     // TODO: Add lurkers here when we get to that. 
-    if ([ignoreList].some((arr) => arr.includes(lcUsername))) 
+    
+    if([...ignoreList].includes(lcUsername))
     {
         console.log(`CONSOLE: ${username} is on the ignore list.`);
         return false;
-    } 
-    if ([consenters, insultTargets].some((arr) => !arr.includes(lcUsername))) 
+    }
+
+    if(![...consenters, ...insultTargets].includes(lcUsername))
     {
         return false;
     }

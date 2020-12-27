@@ -18,16 +18,19 @@ function onMessage (_channel, tags, _message)
 {
     addUserToInsultTargets(tags.username);
 }
+
 // Listener for people joining the channel.
 function onJoin (_channel, username)
 {
     addUserToInsultTargets(username);
 }
+
 // Listener for people leaving the channel.
 function onPart (_channel, username)
 {
     removeUserFromInsultTargets(username);
 }
+
 // Adds a user to the insult list if they aren't already in it.
 function addUserToInsultTargets (username)
 {
@@ -48,6 +51,7 @@ function addUserToInsultTargets (username)
         }
     }
 }
+
 // Removes a user from the insult list if they are on it.
 function removeUserFromInsultTargets (username)
 {
@@ -83,6 +87,7 @@ function stopInsultTimer ()
 // Does all the work to get and say a random insult at specified user. If no user is given, pick someone random.
 function sayRandomInsult (targetedUser = undefined)
 {
+    const { checkInsultability } = require('./chat');
     const { insultTargets, formatInsult } = require('./chat');
 
     // Make sure that we have at least one target.
@@ -129,6 +134,7 @@ function sayRandomInsult (targetedUser = undefined)
         console.log('CONSOLE: No one is here for me to insult...');
     }
 }
+
 // Returns a random insult from the list of insults.
 function getRandomInsult ()
 {

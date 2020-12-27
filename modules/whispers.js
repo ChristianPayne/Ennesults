@@ -1,19 +1,22 @@
 // TODO: Integrate this.
+const core = require('./core');
+const files = require('./files').files;
 
 // Speak on whisper
-function onWhisper(from, userstate, message,)
+function onWhisper(from, _userstate, message, self)
 {
     // Don't listen to my own messages..
     if (self) return;
-    
-    settings.usersAllowedToWhisper.forEach((value, index) => {
+
+    files.settings.usersAllowedToWhisper.forEach((value, index) => {
         if(from.includes(value.toLowerCase()))
         {
             console.log(`[WHISPER FROM] ${from} to say : ${message}`);
-            chat(message);
+            core.chat(message);
         }
     });
-    
+}
 
-    // Do your stuff.
+module.exports = {
+    onWhisper
 }

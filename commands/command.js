@@ -30,6 +30,12 @@ class Command
         return this.description;
     }
 
+    // Return current aliases.
+    getAliases ()
+    {
+        return this.aliases;
+    }
+
     // Returns true of the given string is part of the name or alias list.
     isCommandOrAlias (commandName)
     {

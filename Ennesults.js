@@ -1,9 +1,9 @@
 // Modules
-let files = require("./modules/files");
-let core = require("./modules/core");
-let chat = require("./modules/chat");
-let commands = require('./modules/commands');
-let insultTimer = require('./modules/insultTimer');
+const files = require("./modules/files");
+const core = require("./modules/core");
+const chat = require("./modules/chat");
+const commands = require('./modules/commands');
+const insultTimer = require('./modules/insultTimer');
 
 
 //#region Commands

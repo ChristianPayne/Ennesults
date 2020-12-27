@@ -12,22 +12,24 @@ const Calmdown = require("../commands/calmdown");
 const Targets = require("../commands/targets");
 const Reply = require("../commands/reply");
 const Stats = require("../commands/stats");
+const Alias = require("../commands/alias");
 
 // A list of all commands that are currently available.
 const commands = {
-    orders : new Orders(),
-    help : new Help(),
-    consent : new Consent(),
-    revokeConsent : new RevokeConsent(),
-    color : new Color(),
-    addennesult : new AddEnnesult(),
-    removeennesult : new RemoveEnnesult(),
-    provoke : new Provoke(),
-    calmdown : new Calmdown(),
-    targets : new Targets(),
-    mukbang : new Reply('mukbang', [], 'Mukbang!'),
-    bang : new Reply('bang', [''], 'BANG!'),
-    stats : new Stats(),
+    Orders : new Orders(),
+    Help : new Help(),
+    Consent : new Consent(),
+    RevokeConsent : new RevokeConsent(),
+    Color : new Color(),
+    AddEnnesult : new AddEnnesult(),
+    RemoveEnnesult : new RemoveEnnesult(),
+    Provoke : new Provoke(),
+    Calmdown : new Calmdown(),
+    Targets : new Targets(),
+    Mukbang : new Reply('mukbang', [], 'Mukbang!'),
+    Bang : new Reply('bang', [''], 'BANG!'),
+    Stats : new Stats(),
+    Alias : new Alias(),
 }
 
 // Get all of the keys for our commands.
@@ -82,12 +84,13 @@ function executeCommand (name, args, props)
 getCommandKeys().forEach((value1) => {
     for (let i = 0; i < getCommandKeys().length; i++) 
     {
+        // If we are comparing the same things then skip this iteration.
         if(value1 === getCommandKeys()[i]) continue;
 
-        console.log(`${value1} | ${getCommandKeys()[i]}`);
         // Check to see if the names are the same.
         if(commands[getCommandKeys()[i]].isCommandOrAlias(commands[value1].name))
         {
+            // Log a warning so we know if there is a duplicate.
             console.log(`WARNING: ${value1} is the same name as ${getCommandKeys()[i]}`);
         }
 
