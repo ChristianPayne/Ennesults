@@ -9,7 +9,7 @@ class Consent extends Command
     // Command base
     constructor() {
         super('consent', ['c']);
-        this.setDescription('Gives consent to the bot to interact with you.');
+        this.setDescription('Gives consent for the bot to interact with you.');
     }
 
     execute (args, props)
