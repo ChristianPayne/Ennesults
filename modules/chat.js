@@ -1,7 +1,11 @@
 // Core Twitch connection features.
 const core = require('./core');
+// Users Helper
+const User = require('../helpers/user');
 // Arrays from files.
 const {ignoreList, consenters} = require('../helpers/files').files;
+
+
 
 // Commands module.
 const commands = require('./commands');
@@ -11,12 +15,12 @@ const insultTimer = require('./insultTimer');
 const files = require('../helpers/files');
 // Whisper Module
 const whispers = require('./whispers');
+// Lurkers Module
+const lurkers = require('./lurkers');
 // Runtime array of users in chat.
 const allUsersInChat = [];
 // Runtime array of insult targets.
 const insultTargets = [];
-// Runtime array of lurkers in chat.
-const lurkers = [];
 
 // Listener for normal chat messages.
 core.client.on('message', (channel, tags, message, self) => 
@@ -26,6 +30,8 @@ core.client.on('message', (channel, tags, message, self) =>
 
     // Add functions here for things that need to listen to chat messages.
     insultTimer.onMessage(channel, tags, message);
+
+    lurkers.onMessage(channel, tags, message);
 });
 
 // Listener for commands.
@@ -87,10 +93,22 @@ core.client.on("whisper", (from, userstate, message, self) =>
 // Add users to allUsersInChat.
 function addUserToViewerList (username)
 {
-    if(!allUsersInChat.includes(username))
+    // Check to see if this user isnt in the list.
+    if(!allUsersInChat.some((value) => {
+        if(value.getUsername() === username)
+        {
+            return true;
+        }
+    }))
     {
-        allUsersInChat.push(username);
+        // Push the new user into the list.
+        allUsersInChat.push(new User(username));
+        console.log(`Pushed ${username} into list.`);
     }
+    // if(!allUsersInChat.includes(username))
+    // {
+    //     allUsersInChat.push(username);
+    // }
 }
 
 // Remove users from allUsersInChat.
@@ -108,9 +126,10 @@ function removeUserFromViewerList (username)
 function checkInsultability (username)
 {
     const lcUsername = username.toLowerCase();
+    const lurkers = require('./lurkers').getLurkers();
     // TODO: Add lurkers here when we get to that. 
     
-    if([...ignoreList].includes(lcUsername))
+    if([...ignoreList, ...lurkers].includes(lcUsername))
     {
         console.log(`CONSOLE: ${username} is on the ignore list.`);
         return false;

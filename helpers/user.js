@@ -3,26 +3,32 @@
 
 class User 
 {
-    constructor (username, timestamp)
+    constructor (username)
     {
         this.username = username;
         this.isInsultable = true;
-        this.timestamp = timestamp;
+        this.updateLastMessageTime();
     }
 
-    getTimeLastSpoken ()
+    getUsername ()
     {
-        // Return timestamp
+        return this.username;
+    }
+
+    timeSinceLastMessage ()
+    {
+        return Date.now() - this.lastMessageTime;
     }
 
     getInsultable ()
     {
-        // Return isInsultable.
         return this.isInsultable;
     }
 
-    setTimestamp ()
+    updateLastMessageTime ()
     {
-
+        this.lastMessageTime = Date.now();
     }
 }
+
+module.exports = User;
