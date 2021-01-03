@@ -2,25 +2,17 @@
 const core = require('./core');
 // Users Helper
 const User = require('../helpers/user');
-// Arrays from files.
-const {ignoreList, consenters} = require('../helpers/files').files;
-
-
+// Helpers
+const { isUserInList, userIndexInList } = require('../helpers/helpers');
 
 // Commands module.
 const commands = require('./commands');
 // Insult timer module.
 const insultTimer = require('./insultTimer');
-// Files Module
-const files = require('../helpers/files');
 // Whisper Module
 const whispers = require('./whispers');
-// Lurkers Module
-const lurkers = require('./lurkers');
-// Runtime array of users in chat.
+// Runtime array of Users in chat.
 const allUsersInChat = [];
-// Runtime array of insult targets.
-const insultTargets = [];
 
 // Listener for normal chat messages.
 core.client.on('message', (channel, tags, message, self) => 
@@ -28,10 +20,20 @@ core.client.on('message', (channel, tags, message, self) =>
     // Don't listen to my own messages or commands..
     if (self || message.startsWith('!')) return;
 
+    // Update last message timestamp
+    const userIndex = userIndexInList(tags.username, allUsersInChat);
+    if(userIndex >= 0)
+    {
+        allUsersInChat[userIndex].updateLastMessageTime();
+    }
+    else
+    {
+        // Add a new user to the list.
+        addUserToViewerList(tags.username);
+    }
+
     // Add functions here for things that need to listen to chat messages.
     insultTimer.onMessage(channel, tags, message);
-
-    lurkers.onMessage(channel, tags, message);
 });
 
 // Listener for commands.
@@ -39,6 +41,13 @@ core.client.on('message', (channel, tags, message, self) =>
 {
     // Don't listen to my own messages or normal messages..
     if (self || !message.startsWith('!')) return;
+
+    const userIndex = userIndexInList(tags.username, allUsersInChat);
+    if(userIndex < 0)
+    {
+        addUserToViewerList(tags.username);
+    }
+
 
     // TODO: Check ignore list for people that can't use the bot.
     
@@ -52,9 +61,6 @@ core.client.on('join', (channel, username, self) =>
 {
     if (self) return;
 
-    // Call the listener for the insultTimer module.
-    insultTimer.onJoin(channel, username);
-
     // Add all users who join to the viewer list.
     addUserToViewerList(username);
 });
@@ -65,11 +71,10 @@ core.client.on('part', (channel, username, self) =>
     if (self) return;
 
     // Call the listener for the insultTimer module.
-    insultTimer.onPart(channel, username);
+    // insultTimer.onPart(channel, username);
 
     // Remove users from the viewer list when they leave the channel.
     removeUserFromViewerList(username);
-    
 });
 
 // Start insults when logging into the channel.
@@ -79,7 +84,7 @@ core.client.on("logon", () =>
     require('./insultTimer').startInsultTimer();
 });
 
-// Listener for whispers. TODO: Add whisper functionality
+// Listener for whispers.
 core.client.on("whisper", (from, userstate, message, self) => 
 {
     // Don't listen to my own messages..
@@ -90,58 +95,34 @@ core.client.on("whisper", (from, userstate, message, self) =>
 });
 
 
+
 // Add users to allUsersInChat.
 function addUserToViewerList (username)
 {
     // Check to see if this user isnt in the list.
-    if(!allUsersInChat.some((value) => {
-        if(value.getUsername() === username)
-        {
-            return true;
-        }
-    }))
+    if(!isUserInList(username, allUsersInChat))
     {
         // Push the new user into the list.
-        allUsersInChat.push(new User(username));
-        console.log(`Pushed ${username} into list.`);
+        const newUser = new User(username);
+        newUser.updateLastMessageTime();
+        allUsersInChat.push(newUser);
+        console.log(`Pushed ${username} into allUsersInChat list.`, );
+        return newUser;
     }
-    // if(!allUsersInChat.includes(username))
-    // {
-    //     allUsersInChat.push(username);
-    // }
 }
 
 // Remove users from allUsersInChat.
 function removeUserFromViewerList (username)
 {
-    let partedUserIndex = allUsersInChat.indexOf(username);
-    if(partedUserIndex != -1)
+    if(isUserInList(username, allUsersInChat))
     {
+        const partedUserIndex = userIndexInList(username, allUsersInChat);
         allUsersInChat.splice(partedUserIndex);
-        console.log(`CONSOLE: Removed ${username} from allUsersInChat.`);
+        console.log(`CONSOLE: Removed ${username} from allUsersInChat at index ${partedUserIndex}.`);
     }
 }
 
-//#region Chat helpers
-function checkInsultability (username)
-{
-    const lcUsername = username.toLowerCase();
-    const lurkers = require('./lurkers').getLurkers();
-    // TODO: Add lurkers here when we get to that. 
-    
-    if([...ignoreList, ...lurkers].includes(lcUsername))
-    {
-        console.log(`CONSOLE: ${username} is on the ignore list.`);
-        return false;
-    }
-
-    if(![...consenters, ...insultTargets].includes(lcUsername))
-    {
-        return false;
-    }
-
-    return true;
-}
+//#region Chat helpers 
 
 // Used to check to see if the given user is a mod or owner of the channel.
 function isMod (props)
@@ -190,10 +171,7 @@ function formatUsername (username)
 
 module.exports = {
     allUsersInChat,
-    insultTargets,
-    consenters,
     isMod,
-    checkInsultability,
     formatInsult,
     formatUsername
 };

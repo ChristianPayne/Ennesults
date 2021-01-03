@@ -16,65 +16,19 @@ let insultInterval = null;
 // Listener for messages.
 function onMessage (_channel, tags, _message)
 {
-    addUserToInsultTargets(tags.username);
+    // addUserToInsultTargets(tags.username);
 }
 
-// Listener for people joining the channel.
-function onJoin (_channel, username)
-{
-    addUserToInsultTargets(username);
-}
-
-// Listener for people leaving the channel.
-function onPart (_channel, username)
-{
-    removeUserFromInsultTargets(username);
-}
-
-// Adds a user to the insult list if they aren't already in it.
-function addUserToInsultTargets (username)
-{
-    // Get the current insult targets array.
-    const { consenters, insultTargets } = require('./chat');
-
-    if(consenters.includes(username))
-    {
-        // Checks the list for their name already.
-        if(insultTargets.includes(username))
-        {
-            return;
-        }
-        else
-        {
-            insultTargets.push(username);
-            console.log(`CONSOLE: ${username} has become a target.`);
-        }
-    }
-}
-
-// Removes a user from the insult list if they are on it.
-function removeUserFromInsultTargets (username)
-{
-    // Get the current insult targets array.
-    const { insultTargets } = require('./chat');
-
-    let removedUserIndex = insultTargets.indexOf(username);
-    if(removedUserIndex !== -1)
-    {
-        insultTargets.splice(removedUserIndex, 1);
-        console.log(`CONSOLE: ${username} was removed from the insults list.`);
-    }
-}
 
 // Starts the insult timer if there isnt already one running.
 function startInsultTimer ()
 {
     if(insultInterval) return;
 
-    insultInterval = setInterval(() => 
-    {
-        sayRandomInsult();
-    }, settings.insultIntervalTime * 1000);
+    // insultInterval = setInterval(() => 
+    // {
+    //     sayRandomInsult();
+    // }, settings.insultIntervalTime * 1000);
 }
 
 // Stops the insult timer if there is one running.
@@ -154,9 +108,7 @@ function getRandomInsult ()
 }
 
 module.exports = {
-    onMessage, 
-    onJoin, 
-    onPart, 
+    onMessage,
     startInsultTimer, 
     stopInsultTimer,
     sayRandomInsult

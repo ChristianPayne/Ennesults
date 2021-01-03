@@ -1,8 +1,9 @@
 // Basic requirements
 const Command = require('./command.js');
 // Custom requirements
-const { consenters, insultTargets } = require('../helpers/files.js').files;
+const { consenters } = require('../helpers/files.js').files;
 const { saveJSONFile } = require('../helpers/files.js');
+const { userIndexInList } = require('../helpers/helpers.js');
 
 // Extends from the base Command class.
 class RevokeConsent extends Command
@@ -48,10 +49,17 @@ class RevokeConsent extends Command
         
         if(consenters.includes(consentTarget))
         {
-            insultTargets.splice(insultTargets.indexOf(consentTarget));
+            // insultTargets.splice(insultTargets.indexOf(consentTarget));
             consenters.splice(consenters.indexOf(consentTarget), 1);
             saveJSONFile('./files/consenters.json', consenters);
             this.chat(`/me ${consentTarget}, fine, I'll go easy on you.`);
+
+            const { allUsersInChat } = require('../modules/chat');
+            const userIndex = userIndexInList(consentTarget, allUsersInChat);
+            if(userIndex >= 0)
+            {
+                allUsersInChat[userIndex].isConsented = false;
+            }
         }
         else
         {

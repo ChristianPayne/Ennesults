@@ -1,9 +1,9 @@
 {
-    "channel" : "Ennegineer",
+    "channel" : "ChrisGriffin522",
     "insultIntervalTime" : "180",
     "insultMinimumTime" : "300",
     "insultMinimumChatLines" : "10",
-    "lurkTimer" : "5",
+    "lurkTimer" : "30",
     "enCorrectionPercentage" : "0.2",
     "usersAllowedToWhisper" : ["ChrisGriffin522", "jay_pez04"]
 }

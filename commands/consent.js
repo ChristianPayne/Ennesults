@@ -1,8 +1,10 @@
 // Basic requirements
 const Command = require('./command.js');
 // Custom requirements
-const { consenters, insultTargets } = require('../helpers/files.js').files;
-const { saveJSONFile } = require('../helpers/files.js');
+const { consenters } = require('../helpers/files').files;
+const { saveJSONFile } = require('../helpers/files');
+const { isMod } = require('../modules/chat');
+const { userIndexInList } = require('../helpers/helpers.js');
 
 class Consent extends Command
 {
@@ -19,7 +21,6 @@ class Consent extends Command
         let consentTarget;
         if(args[0] !== undefined)
         {
-            const { isMod } = require('../modules/chat.js');
             // Check to see if the command was sent from a mod to change the consent of someone else.
             if(isMod(props))
             {
@@ -49,7 +50,13 @@ class Consent extends Command
             consenters.push(consentTarget);
             saveJSONFile("./files/consenters.json", consenters);
             this.chat(`/me ${consentTarget} has consented.`);
-            // TODO: addUserToInsultList(consentTarget);
+
+            const { allUsersInChat } = require('../modules/chat');
+            const userIndex = userIndexInList(consentTarget, allUsersInChat);
+            if(userIndex >= 0)
+            {
+                allUsersInChat[userIndex].isConsented = true;
+            }
         }
         else
         {

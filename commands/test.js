@@ -7,14 +7,14 @@ class Test extends Command
 {
 
     constructor() {
-        super('test', ['alias']);
+        super('test', []);
         this.setDescription('This is a description for a test command.');
     }
 
     execute (args, props)
     {
         super.execute();
-        this.chat("This is a test of the test command.");
+        console.log(JSON.stringify(require('../modules/chat').allUsersInChat));
     }
 }
 

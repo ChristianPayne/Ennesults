@@ -21,15 +21,16 @@ const commands = {
     Consent : new Consent(),
     RevokeConsent : new RevokeConsent(),
     Color : new Color(),
-    AddEnnesult : new AddEnnesult(),
-    RemoveEnnesult : new RemoveEnnesult(),
-    Provoke : new Provoke(),
-    Calmdown : new Calmdown(),
-    Targets : new Targets(),
+    // AddEnnesult : new AddEnnesult(),
+    // RemoveEnnesult : new RemoveEnnesult(),
+    // Provoke : new Provoke(),
+    // Calmdown : new Calmdown(),
+    // Targets : new Targets(),
     Mukbang : new Reply('mukbang', [], 'Mukbang!'),
     Bang : new Reply('bang', [''], 'BANG!'),
-    Stats : new Stats(),
+    // Stats : new Stats(),
     Alias : new Alias(),
+    Test : new Test(),
 }
 
 // Get all of the keys for our commands.
