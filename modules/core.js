@@ -7,7 +7,8 @@ const client = new tmi.Client({
     options: { debug: true },
     connection: {
         secure: true,
-        reconnect: true
+        reconnect: true,
+        port: process.env.PORT || 5000
     },
     identity: {
         username : process.env.BOT_USERNAME,
