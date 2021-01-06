@@ -15,14 +15,14 @@ class User
     {
         if(!this.getConsented())
         {
-            console.log(`${this.getUsername()} is not consented.`); 
+            // console.log(`${this.getUsername()} is not consented.`); 
             this.isInsultable = false;
             return false;
         } 
 
         if(this.getIsLurking())
         {
-            console.log(`${this.getUsername()} is lurking.`);
+            // console.log(`${this.getUsername()} is lurking.`);
             this.isInsultable = false;
             return false;
         } 
@@ -30,7 +30,7 @@ class User
         // TODO: Check ignore list too.
         
         this.isInsultable = true;
-        console.log(`${this.getUsername()} is insultable.`);
+        // console.log(`${this.getUsername()} is insultable.`);
         return true;
     }
 
@@ -56,7 +56,7 @@ class User
         const { settings } = require('./files').files;
         if(this.timeSinceLastMessage() >= (settings.lurkTimer * 1000)){
             this.isLurking = true;
-            console.log(`lastMessageTime: ${this.lastMessageTime}`);
+            // console.log(`lastMessageTime: ${this.lastMessageTime}`);
         }else{
             this.isLurking = false;
         }

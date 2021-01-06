@@ -106,7 +106,7 @@ function addUserToViewerList (username)
         const newUser = new User(username);
         newUser.updateLastMessageTime();
         allUsersInChat.push(newUser);
-        console.log(`Pushed ${username} into allUsersInChat list.`, );
+        // console.log(`Pushed ${username} into allUsersInChat list.`, );
         return newUser;
     }
 }
@@ -120,6 +120,18 @@ function removeUserFromViewerList (username)
         allUsersInChat.splice(partedUserIndex);
         console.log(`CONSOLE: Removed ${username} from allUsersInChat at index ${partedUserIndex}.`);
     }
+}
+
+function getInsultableUsers ()
+{
+    const insultableUsers = [];
+    allUsersInChat.map((value) => {
+        if(value.checkInsultability())
+        {
+            insultableUsers.push(value);
+        }
+    });
+    return insultableUsers;
 }
 
 //#region Chat helpers 
@@ -173,5 +185,6 @@ module.exports = {
     allUsersInChat,
     isMod,
     formatInsult,
-    formatUsername
+    formatUsername,
+    getInsultableUsers
 };

@@ -7,14 +7,16 @@ class Test extends Command
 {
 
     constructor() {
-        super('test', []);
+        super('test');
         this.setDescription('This is a description for a test command.');
     }
 
     execute (args, props)
     {
+        const { getInsultableUsers } = require('../modules/chat');
         super.execute();
-        console.log(JSON.stringify(require('../modules/chat').allUsersInChat));
+        // console.log(JSON.stringify(require('../modules/chat').allUsersInChat));
+        getInsultableUsers();
     }
 }
 

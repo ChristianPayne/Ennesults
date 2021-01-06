@@ -25,7 +25,7 @@ const commands = {
     // RemoveEnnesult : new RemoveEnnesult(),
     // Provoke : new Provoke(),
     // Calmdown : new Calmdown(),
-    // Targets : new Targets(),
+    Targets : new Targets(),
     Mukbang : new Reply('mukbang', [], 'Mukbang!'),
     Bang : new Reply('bang', [''], 'BANG!'),
     // Stats : new Stats(),

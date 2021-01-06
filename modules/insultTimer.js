@@ -25,10 +25,10 @@ function startInsultTimer ()
 {
     if(insultInterval) return;
 
-    // insultInterval = setInterval(() => 
-    // {
-    //     sayRandomInsult();
-    // }, settings.insultIntervalTime * 1000);
+    insultInterval = setInterval(() => 
+    {
+        sayRandomInsult();
+    }, settings.insultIntervalTime * 1000);
 }
 
 // Stops the insult timer if there is one running.
@@ -48,8 +48,11 @@ function stopInsultTimer ()
 // Does all the work to get and say a random insult at specified user. If no user is given, pick someone random.
 function sayRandomInsult (targetedUser = undefined)
 {
-    const { checkInsultability } = require('./chat');
-    const { insultTargets, formatInsult } = require('./chat');
+    const { formatInsult, getInsultableUsers } = require('./chat');
+
+    const insultTargets = getInsultableUsers();
+    
+    console.log(insultTargets.map((value)=>{return value.getUsername()}));
 
     // Make sure that we have at least one target.
     if(insultTargets.length > 0)
@@ -73,7 +76,7 @@ function sayRandomInsult (targetedUser = undefined)
                 {
                     break;
                 }
-            } while (checkInsultability(insultTargets[randTargetIndex]) && insultTargets[randTargetIndex] === lastUserInsulted);
+            } while (insultTargets[randTargetIndex] === lastUserInsulted);
 
             chosenUser = insultTargets[randTargetIndex];
         }
@@ -83,7 +86,7 @@ function sayRandomInsult (targetedUser = undefined)
         }
         
         // Format the insult message and say it.
-        chat(formatInsult(randInsult, chosenUser, settings.channel));
+        chat(formatInsult(randInsult, chosenUser.getUsername(), settings.channel));
 
         // Set the last user insulted to the one we just picked.
         lastUserInsulted = chosenUser;
@@ -92,7 +95,7 @@ function sayRandomInsult (targetedUser = undefined)
     }
     else
     {
-        console.log('CONSOLE: No one is here for me to insult...');
+        console.log('CONSOLE: No one is here for me to insult or everyone is lurking.');
     }
 }
 
