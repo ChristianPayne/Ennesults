@@ -4,6 +4,7 @@
 
 // REFACTOR TASKS
 // TODO: Commands cant use lists.
+// TODO: Make insults into objects.
 
 // GENERAL TASKS
 // TODO: Make an ignore people list for users that we dont want to react to. (Add this as a top level check as to ignore commands.)

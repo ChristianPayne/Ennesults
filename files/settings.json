@@ -3,7 +3,7 @@
     "insultIntervalTime" : "180",
     "insultMinimumTime" : "300",
     "insultMinimumChatLines" : "10",
-    "lurkTimer" : "300",
+    "lurkTimer" : "600",
     "enCorrectionPercentage" : "0.2",
     "usersAllowedToWhisper" : ["ChrisGriffin522", "jay_pez04", "Ennegineer"]
 }

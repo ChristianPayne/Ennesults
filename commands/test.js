@@ -13,10 +13,17 @@ class Test extends Command
 
     execute (args, props)
     {
-        const { getInsultableUsers } = require('../modules/chat');
         super.execute();
-        // console.log(JSON.stringify(require('../modules/chat').allUsersInChat));
-        getInsultableUsers();
+        const { allUsersInChat } = require('../modules/chat');
+        const { userIndexInList } = require('../helpers/helpers');
+
+        const currentInsultableUsers = allUsersInChat;
+        const userIndex = userIndexInList(props.tags.username, currentInsultableUsers);
+        console.log(allUsersInChat);
+        // if(userIndex >= 0)
+        // {
+        //     console.log(currentInsultableUsers[userIndex]);
+        // }
     }
 }
 

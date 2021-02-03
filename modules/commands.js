@@ -13,6 +13,7 @@ const Targets = require("../commands/targets");
 const Reply = require("../commands/reply");
 const Stats = require("../commands/stats");
 const Alias = require("../commands/alias");
+const Lurk = require("../commands/lurk");
 
 // A list of all commands that are currently available.
 const commands = {
@@ -21,11 +22,12 @@ const commands = {
     Consent : new Consent(),
     RevokeConsent : new RevokeConsent(),
     Color : new Color(),
-    // AddEnnesult : new AddEnnesult(),
-    // RemoveEnnesult : new RemoveEnnesult(),
+    AddEnnesult : new AddEnnesult(),
+    RemoveEnnesult : new RemoveEnnesult(),
     // Provoke : new Provoke(),
     // Calmdown : new Calmdown(),
     Targets : new Targets(),
+    Lurk : new Lurk(),
     Mukbang : new Reply('mukbang', [], 'Mukbang!'),
     Bang : new Reply('bang', [''], 'BANG!'),
     // Stats : new Stats(),

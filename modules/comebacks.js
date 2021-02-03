@@ -1,29 +1,32 @@
-const core = require('./core.js');
+const { chat } = require('../modules/core');
+const { comebacks, settings } = require('../helpers/files').files;
+const { getUserFromUsername, replaceChatVariables } = require('../helpers/helpers');
 // TODO: Integrate this.
 
-// let lastComebackUsed;
+let lastComebackUsed;
 
-function onComebacks(channel, tags, message) 
+function onMessage(channel, tags, message) 
 {
-    if(!message.startsWith('!'))
+    // Look for people @ing
+    if(!message.toLowerCase().includes("@ennesults"))
+        return;
+
+    if(tags.username === 'ennesults')
+        return;
+
+    // Get the user from the username.
+    const user = getUserFromUsername(tags.username);
+    
+    if(!user)
     {
-        // Look for people @ing
-        if(message.toLowerCase().includes("@ennesults") && tags.username !== 'ennesults')
-        {
-            if(checkInsultability(tags.username))
-            {
-                sayRandomComeback(tags.username);
-            }
-            else
-            {
-                console.log(`${username} is not insultable.`);
-            }
-        }
+        console.log("Can not get user from username.");
         return;
     }
+    
+    sayRandomComeback(user);
 }
 
-function sayRandomComeback(toUser)
+function sayRandomComeback(user)
 {
     setTimeout(() => {
         if(!comebacks.length > 0)
@@ -38,14 +41,12 @@ function sayRandomComeback(toUser)
             chosenComeback = comebacks[randomIndex];
         } while (chosenComeback === lastComebackUsed);
         
-        
+        let comeback = replaceChatVariables(chosenComeback, user.username, settings.channel);
 
-        let comeback = replaceChatVariables(chosenComeback, toUser, settings.channel);
-
-        if(checkInsultability(toUser))
-        {
+        // if(user.checkInsultability())
+        // {
             chat(comeback);
-        }
+        // }
         
         lastComebackUsed = chosenComeback;
     }, 2000);
@@ -69,3 +70,5 @@ function addComebackAndSave (comeback)
         chat("/me Comeback already added.");
     }
 }
+
+module.exports = { onMessage }

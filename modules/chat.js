@@ -3,7 +3,7 @@ const core = require('./core');
 // Users Helper
 const User = require('../helpers/user');
 // Helpers
-const { isUserInList, userIndexInList } = require('../helpers/helpers');
+const { isUserInList, userIndexInList, getUserFromUsername } = require('../helpers/helpers');
 
 // Commands module.
 const commands = require('./commands');
@@ -11,6 +11,8 @@ const commands = require('./commands');
 const insultTimer = require('./insultTimer');
 // Whisper Module
 const whispers = require('./whispers');
+// Comebacks module.
+const comebacks = require('./comebacks');
 // Runtime array of Users in chat.
 const allUsersInChat = [];
 
@@ -32,8 +34,13 @@ core.client.on('message', (channel, tags, message, self) =>
         addUserToViewerList(tags.username);
     }
 
-    // Add functions here for things that need to listen to chat messages.
+    //---- Add functions here for things that need to listen to chat messages. ----//
+
+    // Insult Timer listener.
     insultTimer.onMessage(channel, tags, message);
+
+    // Comebacks listener.
+    comebacks.onMessage(channel, tags, message);
 });
 
 // Listener for commands.
@@ -104,7 +111,7 @@ function addUserToViewerList (username)
     {
         // Push the new user into the list.
         const newUser = new User(username);
-        newUser.updateLastMessageTime();
+        // newUser.updateLastMessageTime();
         allUsersInChat.push(newUser);
         // console.log(`Pushed ${username} into allUsersInChat list.`, );
         return newUser;
@@ -130,7 +137,7 @@ function getInsultableUsers ()
         {
             insultableUsers.push(value);
         }
-    });
+    }); 
     return insultableUsers;
 }
 

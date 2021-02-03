@@ -4,7 +4,8 @@ class User
     {
         this.username = username;
         this.isConsented = this.getConsented(this.username);
-        this.isLurking = false;
+        this.isLurking = true;
+        this.forceLurk = false;
         this.lastMessageTime = 0;
         // this.updateLastMessageTime();
         this.isInsultable = false;
@@ -15,7 +16,7 @@ class User
     {
         if(!this.getConsented())
         {
-            // console.log(`${this.getUsername()} is not consented.`); 
+            // console.log(`${this.getUsername()} is not consented.`);
             this.isInsultable = false;
             return false;
         } 
@@ -53,19 +54,43 @@ class User
 
     getIsLurking ()
     {
-        const { settings } = require('./files').files;
-        if(this.timeSinceLastMessage() >= (settings.lurkTimer * 1000)){
+        if(this.timeSinceLastMessage == 0)
+        {
             this.isLurking = true;
-            // console.log(`lastMessageTime: ${this.lastMessageTime}`);
         }else{
-            this.isLurking = false;
+            const { settings } = require('./files').files;
+            if(this.timeSinceLastMessage() >= (settings.lurkTimer * 1000)){
+                this.isLurking = true;
+                // console.log(`lastMessageTime: ${this.lastMessageTime}`);
+            }else{
+                this.isLurking = false;
+            }
         }
+
+        if(this.forceLurk)
+        {
+            this.isLurking = true;
+            console.log(`${this.getUsername()} is forcing a lurk.`);
+        }
+
         return this.isLurking;
+    }
+
+    setIsLurking (forceLurk = true)
+    {
+        if(forceLurk === true)
+        {
+            console.log(`${this.getUsername()} set force lurk to ${forceLurk}`);
+        }
+        this.forceLurk = forceLurk;
     }
 
     updateLastMessageTime ()
     {
         this.lastMessageTime = Date.now();
+
+        // Sets forceLurk to false.
+        this.setIsLurking(false);
     }
 
     timeSinceLastMessage ()
