@@ -17,6 +17,12 @@ class Alias extends Command
     {
         super.execute();
 
+        if(args.length <= 0)
+        {
+            this.chat(`${this.getDescription()}`);
+            return;
+        }
+
         const commands = require('../modules/commands.js');
         let commandFound = false;
 

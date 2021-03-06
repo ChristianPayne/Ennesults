@@ -9,7 +9,7 @@ class Help extends Command
     // Name command and aliases in params or super params. 
     constructor() {
         super('help', ['h']);
-        this.setDescription('!help <command name> tells you about what the specified command does.');
+        this.setDescription('Do you really need to know how to ask for help?');
     }
 
     // Executes command when called.
@@ -31,7 +31,7 @@ class Help extends Command
             }
 
             // Find a match of the arg and chat the description.
-            if(args[0] === commands[keys[i]].name)
+            if(args[0] === commands[keys[i]].name || commands[keys[i].includes(args[0])])
             {
                 this.chat(commands[keys[i]].getDescription());
                 return;

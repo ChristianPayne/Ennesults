@@ -13,6 +13,8 @@ const insultTimer = require('./insultTimer');
 const whispers = require('./whispers');
 // Comebacks module.
 const comebacks = require('./comebacks');
+// Corrections module.
+const corrections = require('./corrections');
 // Runtime array of Users in chat.
 const allUsersInChat = [];
 
@@ -27,11 +29,12 @@ core.client.on('message', (channel, tags, message, self) =>
     if(userIndex >= 0)
     {
         allUsersInChat[userIndex].updateLastMessageTime();
+        // console.log(allUsersInChat[userIndex]);
     }
     else
     {
         // Add a new user to the list.
-        addUserToViewerList(tags.username);
+        addUserToViewerList(tags.username, true);
     }
 
     //---- Add functions here for things that need to listen to chat messages. ----//
@@ -41,6 +44,9 @@ core.client.on('message', (channel, tags, message, self) =>
 
     // Comebacks listener.
     comebacks.onMessage(channel, tags, message);
+
+    // Corrections listener.
+    corrections.onMessage(channel, tags, message, self);
 });
 
 // Listener for commands.
@@ -104,16 +110,16 @@ core.client.on("whisper", (from, userstate, message, self) =>
 
 
 // Add users to allUsersInChat.
-function addUserToViewerList (username)
+function addUserToViewerList (username, saidSomething = false)
 {
     // Check to see if this user isnt in the list.
     if(!isUserInList(username, allUsersInChat))
     {
         // Push the new user into the list.
         const newUser = new User(username);
-        // newUser.updateLastMessageTime();
+        saidSomething === true ? newUser.updateLastMessageTime(): false;
         allUsersInChat.push(newUser);
-        // console.log(`Pushed ${username} into allUsersInChat list.`, );
+        console.log(`Pushed ${username} into allUsersInChat list.`, );
         return newUser;
     }
 }
@@ -137,7 +143,7 @@ function getInsultableUsers ()
         {
             insultableUsers.push(value);
         }
-    }); 
+    });
     return insultableUsers;
 }
 

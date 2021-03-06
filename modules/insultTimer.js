@@ -51,8 +51,6 @@ function sayRandomInsult (targetedUser = undefined)
     const { formatInsult, getInsultableUsers } = require('./chat');
 
     const insultTargets = getInsultableUsers();
-    
-    console.log(insultTargets.map((value)=>{return value.getUsername()}));
 
     // Make sure that we have at least one target.
     if(insultTargets.length > 0)
@@ -82,11 +80,29 @@ function sayRandomInsult (targetedUser = undefined)
         }
         else //Use the supplied user as the target.
         {
-            chosenUser = targetedUser;
+            chosenUser = insultTargets.find((value)=>{
+                if(targetedUser === value.getUsername())
+                {
+                    return value;
+                }
+                else
+                {
+                    return false;
+                }
+            });
+        }
+
+        if(chosenUser === undefined)
+        {
+            chat("I can't provoke someone that who's not evenne here. FailFish");
+            return;
+        }
+        else
+        {
+            // Format the insult message and say it.
+            chat(formatInsult(randInsult, chosenUser.getUsername(), settings.channel));
         }
         
-        // Format the insult message and say it.
-        chat(formatInsult(randInsult, chosenUser.getUsername(), settings.channel));
 
         // Set the last user insulted to the one we just picked.
         lastUserInsulted = chosenUser;

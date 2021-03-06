@@ -1,16 +1,17 @@
 // NEEDS TESTING
 
 // TODAY'S TASKS
+// TODO: Fix corrections.
+// TODO: Make an ignore people list for users that we dont want to react to. (Add this as a top level check as to ignore commands.)
 
 // REFACTOR TASKS
 // TODO: Commands cant use lists.
 // TODO: Make insults into objects.
 
 // GENERAL TASKS
-// TODO: Make an ignore people list for users that we dont want to react to. (Add this as a top level check as to ignore commands.)
-// TODO: Track !lurkers
-// TODO: Chat message requirement mixed with random timer for more organic insults.
+// TODO: Update to newer version of Node.js
 // TODO: Make provoke pick insults that have a {user}.
+// TODO: Chat message requirement mixed with random timer for more organic insults.
 // TODO: Make an ennetrance for the bot.
 // TODO: Make a commands list json. (Or somehow break them into another class)
 // TODO: Make Jay's riot command. See what emotes the bot can spam.
@@ -31,6 +32,7 @@
 // -BUG: Colors could be anything.
 
 // DONE TODOs
+// -TODO: Track lurkers
 // -TODO: Make an insults.json
 // -TODO: Need a way to stop the insults.
 // -TODO: Pick a person for an insult.

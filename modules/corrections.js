@@ -1,31 +1,34 @@
 // TODO: Integrate this.
+const correctionOverrides = require('../files/correction_overrides.json');
+const settings = require('../files/settings.json');
+const { getUserFromUsername } = require('../helpers/helpers');
 // 'en' correction
-function onMessage(_channel, tags, message)
+function onMessage(_channel, tags, message, self)
 {
-    if(self || message.startsWith('!') || checkInsultability(tags.username)) return;
+    if(self || message.startsWith('!')) return;
+
+    // checkInsultability(tags.username)
+
+    // Check to see if the user is insultable.
+    if(!getUserFromUsername(tags.username).checkInsultability()) return;
     
     if(message.toLowerCase().includes('en'))
     {
-        let skip = false;
         // Check to make sure we don't need to ignore this word.
-        correctionOverrides.forEach(element => {
-            if(message.toLowerCase().includes(element))
-            {
-                console.log("CONSOLE: " + element + " was flagged.");
-                skip = true;
-            }
-        });
-
-        if(skip)
+        for (const correctionOverride of correctionOverrides)
         {
-            return;
+            if(message.toLowerCase().includes(correctionOverride))
+            {
+                return console.log("CONSOLE: " + correctionOverride + " was flagged.");
+            }
         }
 
+        // Calculate a percentage of corrections.
         let randomNum = Math.random();
         if(randomNum <= settings.enCorrectionPercentage)
         {
-            let correctedMessage = "";
-            correctedMessage = message.toLowerCase().replace("en", "ENNE");
+            const { chat } = require('../modules/core');
+            const correctedMessage = message.toLowerCase().replace("en", "ENNE");
             chat(`Correction: *${correctedMessage}*`);
         }
         else
@@ -50,3 +53,5 @@ function addCorrectionOverride(keyword)
         chat("/me Override already added.");
     }
 }
+
+module.exports = { onMessage };

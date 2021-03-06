@@ -3,7 +3,6 @@ const Command = require('./command.js');
 // Custom requirements
 const { consenters } = require('../helpers/files').files;
 const { saveJSONFile } = require('../helpers/files');
-const { isMod } = require('../modules/chat');
 const { userIndexInList } = require('../helpers/helpers.js');
 
 class Consent extends Command
@@ -21,6 +20,7 @@ class Consent extends Command
         let consentTarget;
         if(args[0] !== undefined)
         {
+            const { isMod } = require('../modules/chat');
             // Check to see if the command was sent from a mod to change the consent of someone else.
             if(isMod(props))
             {

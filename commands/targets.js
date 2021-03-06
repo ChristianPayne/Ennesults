@@ -21,6 +21,7 @@ class Targets extends Command
 
         if(insultTargets.length > 0)
         {
+            // TODO: Make formatting nice for this.
             this.chat(`@${props.tags.username} Current targets are: ${insultTargets}`);
         }
         else

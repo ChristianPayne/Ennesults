@@ -14,6 +14,7 @@ const Reply = require("../commands/reply");
 const Stats = require("../commands/stats");
 const Alias = require("../commands/alias");
 const Lurk = require("../commands/lurk");
+const Lurkers = require("../commands/lurkers");
 
 // A list of all commands that are currently available.
 const commands = {
@@ -24,7 +25,7 @@ const commands = {
     Color : new Color(),
     AddEnnesult : new AddEnnesult(),
     RemoveEnnesult : new RemoveEnnesult(),
-    // Provoke : new Provoke(),
+    Provoke : new Provoke(),
     // Calmdown : new Calmdown(),
     Targets : new Targets(),
     Lurk : new Lurk(),
@@ -33,6 +34,7 @@ const commands = {
     // Stats : new Stats(),
     Alias : new Alias(),
     Test : new Test(),
+    Lurkers: new Lurkers(),
 }
 
 // Get all of the keys for our commands.

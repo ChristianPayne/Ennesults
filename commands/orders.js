@@ -10,6 +10,7 @@ class Orders extends Command
     // Name command and aliases in params or super params. 
     constructor() {
         super('orders', ['commands']);
+        this.setDescription('A list of things you can order Ennesults to do.');
     }
 
     // Executes command when called.
@@ -24,11 +25,11 @@ class Orders extends Command
         {
             if(index < commands.getCommandKeys().length - 1)
             {
-                ordersString += ` !${value},`;
+                ordersString += ` !${value.toLowerCase()},`;
             }
             else
             {
-                ordersString += ` !${value}.`;
+                ordersString += ` !${value.toLowerCase()}.`;
             }
         });
         // console.log();
